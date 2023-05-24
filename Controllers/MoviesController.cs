@@ -24,9 +24,9 @@ namespace API.Controllers
 
         [HttpGet]
         [Route("{id:int}")]
-        public async Task<IActionResult> GetMovieById([FromRoute] int id)
+        public async Task<IActionResult> GetMoviesByDirector([FromRoute] int id)
         {
-            var movie = await _context.Movies.FirstOrDefaultAsync(x => x.Id == id);
+            var movie = await _context.Movies.FromSql($"SELECT * FROM Movies WHERE Director = {id}").ToListAsync();
             if (movie == null)
                 return NotFound();
 
