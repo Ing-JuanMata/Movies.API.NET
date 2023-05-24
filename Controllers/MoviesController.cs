@@ -59,5 +59,19 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return Ok(movie);
         }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteMovie([FromRoute] int id)
+        {
+            var movie = await _context.Movies.FindAsync(id);
+
+            if (movie == null)
+                return NotFound();
+
+            _context.Movies.Remove(movie);
+            await _context.SaveChangesAsync();
+            return Ok(movie);
+        }
     }
 }

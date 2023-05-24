@@ -58,5 +58,20 @@ namespace API.Controllers
             await _context.SaveChangesAsync();
             return Ok(director);
         }
+
+        [HttpDelete]
+        [Route("{id:int}")]
+        public async Task<IActionResult> DeleteDirector([FromRoute] int id)
+        {
+            var director = await _context.Director.FindAsync(id);
+
+            if (director == null)
+                return NotFound();
+
+            _context.Director.Remove(director);
+            await _context.SaveChangesAsync();
+            return Ok(director);
+
+        }
     }
 }
